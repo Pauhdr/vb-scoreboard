@@ -81,15 +81,15 @@ export default function CombinedSettings({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <CardHeader className="flex flex-row items-center justify-between">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-hidden">
+      <Card className="w-full max-w-md h-full max-h-[90vh] overflow-y-auto">
+        <CardHeader className="flex flex-row items-center justify-between flex-shrink-0">
           <CardTitle>Configuración</CardTitle>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X className="w-4 h-4" />
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex-1 overflow-y-auto">
           <Tabs defaultValue="teams" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="teams">Equipos</TabsTrigger>
