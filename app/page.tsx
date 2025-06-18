@@ -27,13 +27,13 @@ export default function HomePage() {
 
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-blue-50 to-orange-50 dark:from-gray-900 dark:to-gray-800 p-4 flex items-center justify-center overflow-hidden">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Marcador de Voleibol</h1>
           <p className="text-gray-600 dark:text-gray-300">Selecciona el tipo de juego para comenzar</p>
         </div>
 
-        <div className="gap-4 flex flex-row">
+        <div className="gap-4 flex flex-col md:flex-row">
           <Card
             className="border-2 hover:border-blue-500 transition-colors cursor-pointer p-8 w-full"
             onClick={() => startGame("volleyball")}

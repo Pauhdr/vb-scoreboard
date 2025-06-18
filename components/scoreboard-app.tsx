@@ -276,6 +276,7 @@ export default function ScoreboardApp({ gameType, onReset }: ScoreboardAppProps)
   const handleTouchStart = (e: React.TouchEvent, team: "team1" | "team2") => {
     if (showSetEndModal) return
 
+    e.preventDefault() // Prevenir scroll
     setSwipeState({
       startY: e.touches[0].clientY,
       startTime: Date.now(),
@@ -288,6 +289,7 @@ export default function ScoreboardApp({ gameType, onReset }: ScoreboardAppProps)
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!swipeState.active || showSetEndModal) return
 
+    e.preventDefault() // Prevenir scroll
     const currentY = e.touches[0].clientY
     const distance = currentY - swipeState.startY
 
@@ -303,6 +305,7 @@ export default function ScoreboardApp({ gameType, onReset }: ScoreboardAppProps)
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!swipeState.active || showSetEndModal) return
 
+    e.preventDefault() // Prevenir scroll
     const endTime = Date.now()
     const timeElapsed = endTime - swipeState.startTime
     const isSwipe = timeElapsed < 500 && swipeState.distance > 50
@@ -368,12 +371,13 @@ export default function ScoreboardApp({ gameType, onReset }: ScoreboardAppProps)
         </div>
 
         {/* Scoreboard - Takes remaining space */}
-        <div className="flex-1 grid grid-cols-2 gap-4 min-h-0">
+        <div className="flex-1 flex flex-col md:grid md:grid-cols-2 gap-4 min-h-0">
           {/* Team 1 */}
           <Card
-            className={`border-2 cursor-pointer hover:shadow-lg transition-all active:scale-95 h-full ${
+            className={`border-2 cursor-pointer hover:shadow-lg transition-all active:scale-95 flex-1 md:h-full ${
               showSetEndModal ? "pointer-events-none opacity-75" : ""
             }`}
+            style={{ touchAction: "none" }}
             onClick={() => addPoint("team1")}
             onTouchStart={(e) => handleTouchStart(e, "team1")}
             onTouchMove={handleTouchMove}
@@ -382,13 +386,15 @@ export default function ScoreboardApp({ gameType, onReset }: ScoreboardAppProps)
           >
             <CardContent className="p-4 h-full flex flex-col justify-center relative">
               {/* Set Indicators */}
-              <div className="absolute bottom-6 left-6 flex gap-1 z-10">{renderSetIndicators("team1")}</div>
+              <div className="absolute bottom-6 left-6 flex gap-1 z-10 md:bottom-6 md:left-6">
+                {renderSetIndicators("team1")}
+              </div>
 
               <div
                 className={`${team1.color} text-white p-6 rounded-lg text-center relative h-full flex flex-col justify-center`}
               >
-                <h2 className="text-xl font-bold mb-2">{team1.name}</h2>
-                <div className="text-8xl font-bold leading-none">{team1.score}</div>
+                <h2 className="text-xl md:text-2xl font-bold mb-2">{team1.name}</h2>
+                <div className="text-6xl md:text-8xl font-bold leading-none">{team1.score}</div>
                 <Badge
                   className={`absolute -top-3 -right-3 text-sm px-3 py-1 cursor-pointer transition-all ${
                     servingTeam === "team1"
@@ -420,9 +426,10 @@ export default function ScoreboardApp({ gameType, onReset }: ScoreboardAppProps)
 
           {/* Team 2 */}
           <Card
-            className={`border-2 cursor-pointer hover:shadow-lg transition-all active:scale-95 h-full ${
+            className={`border-2 cursor-pointer hover:shadow-lg transition-all active:scale-95 flex-1 md:h-full ${
               showSetEndModal ? "pointer-events-none opacity-75" : ""
             }`}
+            style={{ touchAction: "none" }}
             onClick={() => addPoint("team2")}
             onTouchStart={(e) => handleTouchStart(e, "team2")}
             onTouchMove={handleTouchMove}
@@ -431,13 +438,15 @@ export default function ScoreboardApp({ gameType, onReset }: ScoreboardAppProps)
           >
             <CardContent className="p-4 h-full flex flex-col justify-center relative">
               {/* Set Indicators */}
-              <div className="absolute bottom-6 left-6 flex gap-1 z-10">{renderSetIndicators("team2")}</div>
+              <div className="absolute bottom-6 left-6 flex gap-1 z-10 md:bottom-6 md:right-6 md:left-auto">
+                {renderSetIndicators("team2")}
+              </div>
 
               <div
                 className={`${team2.color} text-white p-6 rounded-lg text-center relative h-full flex flex-col justify-center`}
               >
-                <h2 className="text-xl font-bold mb-2">{team2.name}</h2>
-                <div className="text-8xl font-bold leading-none">{team2.score}</div>
+                <h2 className="text-xl md:text-2xl font-bold mb-2">{team2.name}</h2>
+                <div className="text-6xl md:text-8xl font-bold leading-none">{team2.score}</div>
                 <Badge
                   className={`absolute -top-3 -right-3 text-sm px-3 py-1 cursor-pointer transition-all ${
                     servingTeam === "team2"
